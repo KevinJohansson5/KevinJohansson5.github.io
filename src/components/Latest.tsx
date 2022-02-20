@@ -1,5 +1,5 @@
 const Latest = () => {
-  let ratesVal = ["temp"]
+  let ratesVal: String[] = ["temp"]
   return (
     <div>
       <h2>Latest Rates</h2>
