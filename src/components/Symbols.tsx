@@ -1,5 +1,5 @@
 const Symbols = () => {
-  let symbolsValue = ["temp"]
+  let symbolsValue: String[] = ["temp"]
   return (
     <div>
       <h2>Symbols</h2>

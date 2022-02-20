@@ -1,5 +1,5 @@
 const Historical = () => {
-  let historicalVal = ["temp"]
+  let historicalVal: string[] = ["temp"]
   return (
     <div>
       <h2>Historical Rates</h2>
