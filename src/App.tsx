@@ -1,7 +1,5 @@
 import Header from './components/Header'
-import Symbols from './components/Symbols'
-import Latest from './components/Latest'
-import Historical from './components/Historical'
+import Body from './components/Body'
 
 function App() {
 
@@ -10,9 +8,7 @@ function App() {
 
     <div className="App">
       <Header />
-      <Symbols />
-      <Latest />
-      <Historical />
+      <Body />
     </div>
   );
 }
