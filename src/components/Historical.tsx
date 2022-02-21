@@ -1,8 +1,7 @@
 import HistoricalList from './HistoricalList'
 import SymbolsInput from './SymbolsInput'
-import { useState } from 'react'
 
-const Historical = ({value} : {value:HistoricalList[]}) => {
+const Historical = ({value, onUpdate} : {value:HistoricalList[], onUpdate: (value:HistoricalList[]) => void}) => {
   return (
     <div>
       <h2>Historical Rates</h2>
@@ -13,7 +12,7 @@ const Historical = ({value} : {value:HistoricalList[]}) => {
       </p>
       <SymbolsInput />
       <br></br>
-      <button>Get Rates</button>
+      <button onClick={() => onUpdate(value)}>Get Rates</button>
       <ul>
         {value.map((i) => (
           <li key={i.symbol}> {i.symbol} : {i.rate} </li>

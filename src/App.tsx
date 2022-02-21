@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Header from './components/Header'
 import Symbols from './components/Symbols'
 import Latest from './components/Latest'
@@ -7,38 +8,45 @@ import LatestList from './components/LatestList'
 import HistoricalList from './components/HistoricalList'
 
 function App() {
-  let symbolsValue: SymbolsList[] = [
-    {
-      symbol: "TMP", 
-      title: "temp"
-    },
-    {
-      symbol: "TMP2", 
-      title: "temp2"
-    }
-  ]
+  const [symbolsValue, setSymbols] = useState<SymbolsList[]>([])
+  const [latestValue, setLatest] = useState<LatestList[]>([])
+  const [historicalValue, setHistorical] = useState<HistoricalList[]>([])
 
-  let latestValue: LatestList[] = [
+  const updateSymbols = () => {
+    setSymbols([
     {
-      symbol: "TMP", 
-      rate: 0.5
-    },
+      symbol: "TST", 
+      title: "test1"
+    }, 
     {
-      symbol: "TMP2", 
-      rate: 1.1
-    }
-  ]  
+      symbol: "TST2", 
+      title: "test2"
+    }])
+  }
 
-  let historicalValue: HistoricalList[] = [
-    {
-      symbol: "TMP", 
-      rate: 0.6
-    },
-    {
-      symbol: "TMP2", 
-      rate: 1.4
-    }
-  ]
+  const updateLatest = () => {
+    setLatest([
+      {
+        symbol: "TMP", 
+        rate: 0.5
+      },
+      {
+        symbol: "TMP2", 
+        rate: 1.1
+      }])
+  }  
+
+  const updateHistorical = () => {
+    setHistorical([
+      {
+        symbol: "TMP", 
+        rate: 0.6
+      },
+      {
+        symbol: "TMP2", 
+        rate: 1.4
+      }])
+  }
 
   return (
 
@@ -46,13 +54,13 @@ function App() {
       <Header />
       <div style={ container }>
         <div style={ bodyStyle }>
-          <Symbols value={symbolsValue}/>
+          <Symbols value={symbolsValue} onUpdate={updateSymbols}/>
         </div>
         <div style={ bodyStyle }>
-          <Latest value={latestValue}/>
+          <Latest value={latestValue} onUpdate={updateLatest}/>
         </div>
         <div style={ bodyStyle }>
-          <Historical value={historicalValue}/>
+          <Historical value={historicalValue} onUpdate={updateHistorical}/>
         </div>
       </div>
     </div>
