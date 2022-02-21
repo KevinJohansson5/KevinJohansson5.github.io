@@ -7,8 +7,8 @@ const Latest = ({value, symbols, onUpdate} : {value:LatestList[], symbols:Symbol
 
   const [selectedSymbols, setSelected] = useState<string[]>([])
 
-  const addSymbol = (value: string) => {
-    !selectedSymbols.includes(value) && value && setSelected([...selectedSymbols, value])
+  const addSymbol = (selected: string) => {
+    !selectedSymbols.includes(selected) && selected && setSelected([...selectedSymbols, selected])
   } 
 
   return (

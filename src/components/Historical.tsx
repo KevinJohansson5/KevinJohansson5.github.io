@@ -7,8 +7,8 @@ const Historical = ({value, symbols, onUpdate} : {value:HistoricalList[], symbol
 
   const [selectedSymbols, setSelected] = useState<string[]>([])
 
-  const addSymbol = (value: string) => {
-    !selectedSymbols.includes(value) && value && setSelected([...selectedSymbols, value])
+  const addSymbol = (selected: string) => {
+    !selectedSymbols.includes(selected) && selected && setSelected([...selectedSymbols, selected])
   } 
 
   return (
