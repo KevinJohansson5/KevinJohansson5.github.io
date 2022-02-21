@@ -3,13 +3,26 @@ import HistoricalList from './HistoricalList'
 import SymbolsList from './SymbolsList'
 import SymbolsInput from './SymbolsInput'
 
-const Historical = ({value, symbols, onUpdate} : {value:HistoricalList[], symbols:SymbolsList[], onUpdate: (value:HistoricalList[]) => void}) => {
+const Historical = ({symbols} : {symbols:SymbolsList[]}) => {
 
   const [selectedSymbols, setSelected] = useState<string[]>([])
+  const [value, setHistorical] = useState<HistoricalList[]>([])
 
   const addSymbol = (selected: string) => {
     !selectedSymbols.includes(selected) && selected && setSelected([...selectedSymbols, selected])
   } 
+
+  const updateHistorical = () => {
+    setHistorical([
+      {
+        symbol: "TMP", 
+        rate: 0.6
+      },
+      {
+        symbol: "TMP2", 
+        rate: 1.4
+      }])
+  }
 
   return (
     <div>
@@ -21,7 +34,7 @@ const Historical = ({value, symbols, onUpdate} : {value:HistoricalList[], symbol
       </p>
       <SymbolsInput symbols={symbols} selectedSymbols={selectedSymbols} addSymbol={addSymbol} />
       <br></br>
-      <button onClick={() => onUpdate(value)}>Get Rates</button>
+      <button onClick={() => updateHistorical()}>Get Rates</button>
       <ul>
         {value.map((i) => (
           <li key={i.symbol}> {i.symbol} : {i.rate} </li>
