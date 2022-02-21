@@ -1,8 +1,6 @@
 import SymbolsList from './SymbolsList'
 
-const SymbolsInput = ({symbols, selectedSymbols, addSymbol} : {symbols:SymbolsList[], selectedSymbols:string[], addSymbol: (value:string) => void}) => {
-
-
+const SymbolsInput = ({symbols, selectedSymbols, addSymbol} : {symbols:SymbolsList, selectedSymbols:string[], addSymbol: (value:string) => void}) => {
 
   return (
   <div>
@@ -10,8 +8,8 @@ const SymbolsInput = ({symbols, selectedSymbols, addSymbol} : {symbols:SymbolsLi
     <br></br>
     <select onChange={(e) => addSymbol(e.target.value)}>
       <option> </option>
-      {symbols.map((i) => (
-        <option key={i.symbol} value={i.symbol}> {i.symbol} </option>
+      {Object.keys(symbols).map((symbol) => (
+        <option key={symbol} value={symbol}> {symbol} </option>
       ))}
     </select>
     {selectedSymbols.length > 0 ? 
