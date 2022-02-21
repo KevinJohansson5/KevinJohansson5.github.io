@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import API_KEY from 'react-native-dotenv'
 import Header from './components/Header'
 import Symbols from './components/Symbols'
 import Latest from './components/Latest'
@@ -7,18 +6,13 @@ import Historical from './components/Historical'
 import SymbolsList from './components/SymbolsList'
 
 function App() {
+
+
   const [symbolsValue, setSymbols] = useState<SymbolsList>({})
-
-  const updateSymbols = () => {
-    getSymbols()
-  }
-
-  useEffect(() => {
-    updateSymbols()
-  }, [])
 
   const getSymbols = async () =>{
     //const apiResponse = await fetchSymbols()
+    //const symbolResponse = apiResponse.symbols
     const symbolResponse = {
       "AED": "United Arab Emirates Dirham",
       "AFN": "Afghan Afghani",
@@ -193,6 +187,7 @@ function App() {
   }
 
   const fetchSymbols = async () => {
+    const API_KEY = process.env.REACT_APP_API_KEY 
     const url = "http://api.exchangeratesapi.io/v1/symbols?access_key="+API_KEY
     const response = await fetch(url)
     const data = await response.json()
@@ -206,7 +201,7 @@ function App() {
       <Header />
       <div style={ container }>
         <div style={ bodyStyle }>
-          <Symbols value={symbolsValue} onUpdate={updateSymbols}/>
+          <Symbols value={symbolsValue} onUpdate={getSymbols}/>
         </div>
         <div style={ bodyStyle }>
           <Latest symbols={symbolsValue}/>

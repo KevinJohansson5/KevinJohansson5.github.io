@@ -12,13 +12,26 @@ const Latest = ({ symbols } : {symbols:SymbolsList}) => {
     !selectedSymbols.includes(selected) && selected && setSelected([...selectedSymbols, selected])
   } 
 
-  const updateLatest = () => {
-    setLatest(
-      {
-        TMP: 0.5, 
-        TMP2: 1.4
-      })
+  const updateLatest = async () => {
+    const apiResponse = await fetchRates()
+    const ratesResponse = apiResponse.rates
+    setLatest(ratesResponse)
+    clearSelected()
   }  
+
+  const fetchRates = async () => {
+    const API_KEY = process.env.REACT_APP_API_KEY 
+    const baseUrl = "http://api.exchangeratesapi.io/v1/latest?access_key="+API_KEY
+    let url = baseUrl
+    selectedSymbols.length > 0 && (url = url.concat("&symbols=", selectedSymbols.join()))
+    const response = await fetch(url)
+    const data = await response.json()
+    return data
+  }
+
+  const clearSelected = () => {
+    setSelected([])
+  }
 
   return (
     <div>
