@@ -4,13 +4,9 @@ import Symbols from './components/Symbols'
 import Latest from './components/Latest'
 import Historical from './components/Historical'
 import SymbolsList from './components/SymbolsList'
-import LatestList from './components/LatestList'
-import HistoricalList from './components/HistoricalList'
 
 function App() {
   const [symbolsValue, setSymbols] = useState<SymbolsList[]>([])
-  const [latestValue, setLatest] = useState<LatestList[]>([])
-  const [historicalValue, setHistorical] = useState<HistoricalList[]>([])
 
   const updateSymbols = () => {
     setSymbols([
@@ -24,29 +20,6 @@ function App() {
     }])
   }
 
-  const updateLatest = () => {
-    setLatest([
-      {
-        symbol: "TMP", 
-        rate: 0.5
-      },
-      {
-        symbol: "TMP2", 
-        rate: 1.1
-      }])
-  }  
-
-  const updateHistorical = () => {
-    setHistorical([
-      {
-        symbol: "TMP", 
-        rate: 0.6
-      },
-      {
-        symbol: "TMP2", 
-        rate: 1.4
-      }])
-  }
 
   return (
 
@@ -57,10 +30,10 @@ function App() {
           <Symbols value={symbolsValue} onUpdate={updateSymbols}/>
         </div>
         <div style={ bodyStyle }>
-          <Latest value={latestValue} symbols={symbolsValue} onUpdate={updateLatest}/>
+          <Latest symbols={symbolsValue}/>
         </div>
         <div style={ bodyStyle }>
-          <Historical value={historicalValue} symbols={symbolsValue} onUpdate={updateHistorical}/>
+          <Historical  symbols={symbolsValue}/>
         </div>
       </div>
     </div>
