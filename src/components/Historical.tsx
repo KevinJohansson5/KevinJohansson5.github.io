@@ -1,5 +1,6 @@
-const Historical = () => {
-  let historicalVal: string[] = ["temp"]
+import HistoricalList from './HistoricalList'
+
+const Historical = ({value} : {value:HistoricalList[]}) => {
   return (
     <div>
       <h2>Historical Rates</h2>
@@ -16,11 +17,14 @@ const Historical = () => {
       <p>
         <button>Get Rates</button>
       </p>
-      <p>
-        <label> { historicalVal } </label>
-      </p>
+      <ul>
+        {value.map((i) => (
+          <li key={i.symbol}> {i.symbol} : {i.rate} </li>
+        ))}
+      </ul>
     </div>
   )
 }
+
 
 export default Historical
