@@ -1,6 +1,16 @@
+import { useState } from 'react'
 import HistoricalList from './HistoricalList'
+import SymbolsList from './SymbolsList'
+import SymbolsInput from './SymbolsInput'
 
-const Historical = ({value} : {value:HistoricalList[]}) => {
+const Historical = ({value, symbols, onUpdate} : {value:HistoricalList[], symbols:SymbolsList[], onUpdate: (value:HistoricalList[]) => void}) => {
+
+  const [selectedSymbols, setSelected] = useState<string[]>([])
+
+  const addSymbol = (selected: string) => {
+    !selectedSymbols.includes(selected) && selected && setSelected([...selectedSymbols, selected])
+  } 
+
   return (
     <div>
       <h2>Historical Rates</h2>
@@ -9,14 +19,9 @@ const Historical = ({value} : {value:HistoricalList[]}) => {
         <br></br>
         <input type="Date"></input>
       </p>
-      <p>
-        <label>(Optional) Enter List of Symbols</label>
-        <br></br>
-        <input></input>
-      </p>
-      <p>
-        <button>Get Rates</button>
-      </p>
+      <SymbolsInput symbols={symbols} selectedSymbols={selectedSymbols} addSymbol={addSymbol} />
+      <br></br>
+      <button onClick={() => onUpdate(value)}>Get Rates</button>
       <ul>
         {value.map((i) => (
           <li key={i.symbol}> {i.symbol} : {i.rate} </li>
