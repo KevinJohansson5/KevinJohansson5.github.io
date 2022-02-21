@@ -57,10 +57,10 @@ function App() {
           <Symbols value={symbolsValue} onUpdate={updateSymbols}/>
         </div>
         <div style={ bodyStyle }>
-          <Latest value={latestValue} onUpdate={updateLatest}/>
+          <Latest value={latestValue} symbols={symbolsValue} onUpdate={updateLatest}/>
         </div>
         <div style={ bodyStyle }>
-          <Historical value={historicalValue} onUpdate={updateHistorical}/>
+          <Historical value={historicalValue} symbols={symbolsValue} onUpdate={updateHistorical}/>
         </div>
       </div>
     </div>
