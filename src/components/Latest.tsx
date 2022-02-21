@@ -1,16 +1,13 @@
 import LatestList from './LatestList'
-
+import SymbolsInput from './SymbolsInput'
 
 const Latest = ({value} : {value:LatestList[]}) => {
 
   return (
     <div>
       <h2>Latest Rates</h2>
-      <p>
-        <label>(Optional) Enter List of Symbols</label>
-        <br></br>
-        <input></input>
-      </p>
+      <SymbolsInput />
+      <br></br>
       <button>Get Latest Rates</button>
       <ul>
         {value.map((i) => (

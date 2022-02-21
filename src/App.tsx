@@ -7,7 +7,7 @@ import LatestList from './components/LatestList'
 import HistoricalList from './components/HistoricalList'
 
 function App() {
-  let symbolsValue: SymbolsList[] =[
+  let symbolsValue: SymbolsList[] = [
     {
       symbol: "TMP", 
       title: "temp"
@@ -18,7 +18,7 @@ function App() {
     }
   ]
 
-  let latestValue: LatestList[] =[
+  let latestValue: LatestList[] = [
     {
       symbol: "TMP", 
       rate: 0.5
@@ -29,7 +29,7 @@ function App() {
     }
   ]  
 
-  let historicalValue: HistoricalList[] =[
+  let historicalValue: HistoricalList[] = [
     {
       symbol: "TMP", 
       rate: 0.6
