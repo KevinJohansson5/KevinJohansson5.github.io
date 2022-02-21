@@ -1,27 +1,42 @@
 import { useState } from 'react'
-import HistoricalList from './HistoricalList'
-import SymbolsList from './SymbolsList'
 import SymbolsInput from './SymbolsInput'
+import SymbolsList from './SymbolsList'
+import RatesList from './RatesList'
 
-const Historical = ({symbols} : {symbols:SymbolsList[]}) => {
+const Historical = ({symbols} : {symbols:SymbolsList}) => {
 
   const [selectedSymbols, setSelected] = useState<string[]>([])
-  const [value, setHistorical] = useState<HistoricalList[]>([])
+  const [value, setHistorical] = useState<RatesList>({})
+  const [date, setDate] = useState<string>('')
 
   const addSymbol = (selected: string) => {
     !selectedSymbols.includes(selected) && selected && setSelected([...selectedSymbols, selected])
   } 
 
-  const updateHistorical = () => {
-    setHistorical([
-      {
-        symbol: "TMP", 
-        rate: 0.6
-      },
-      {
-        symbol: "TMP2", 
-        rate: 1.4
-      }])
+  const updateHistorical = async () => {
+    //TODO: check for blank date or date out of range
+    const apiResponse = await fetchRates()
+    const ratesResponse = apiResponse.rates
+    setHistorical(ratesResponse)
+    clearSelected()
+  }  
+
+  const fetchRates = async () => {
+    const API_KEY = process.env.REACT_APP_API_KEY 
+    const baseUrl = "http://api.exchangeratesapi.io/v1/"+date+"?access_key="+API_KEY
+    let url = baseUrl
+    selectedSymbols.length > 0 && (url = url.concat("&symbols=", selectedSymbols.join()))
+    const response = await fetch(url)
+    const data = await response.json()
+    return data
+  }
+
+  const clearSelected = () => {
+    setSelected([])
+  }
+
+  const selectDate = (date: string) => {
+    setDate(date)
   }
 
   return (
@@ -30,14 +45,14 @@ const Historical = ({symbols} : {symbols:SymbolsList[]}) => {
       <p>
         <label>Enter Date</label>
         <br></br>
-        <input type="Date"></input>
+        <input type="Date" onChange={(e) => selectDate(e.target.value)}></input>
       </p>
       <SymbolsInput symbols={symbols} selectedSymbols={selectedSymbols} addSymbol={addSymbol} />
       <br></br>
       <button onClick={() => updateHistorical()}>Get Rates</button>
       <ul>
-        {value.map((i) => (
-          <li key={i.symbol}> {i.symbol} : {i.rate} </li>
+        {Object.keys(value).map((symbol) => (
+          <li key={symbol}> {symbol} : {value[symbol]} </li>
         ))}
       </ul>
     </div>

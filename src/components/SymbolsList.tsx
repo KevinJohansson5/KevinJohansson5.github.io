@@ -1,7 +1,5 @@
-
 interface SymbolsList {
-  symbol: string;
-  title: string;
+  [key: string]: string
 }
 
 export default SymbolsList
