@@ -1,5 +1,7 @@
 import Header from './components/Header'
-import Body from './components/Body'
+import Symbols from './components/Symbols'
+import Latest from './components/Latest'
+import Historical from './components/Historical'
 
 function App() {
 
@@ -8,9 +10,29 @@ function App() {
 
     <div className="App">
       <Header />
-      <Body />
+      <div style={ container }>
+        <div style={ bodyStyle }>
+          <Symbols />
+        </div>
+        <div style={ bodyStyle }>
+          <Latest />
+        </div>
+        <div style={ bodyStyle }>
+          <Historical />
+        </div>
+      </div>
     </div>
   );
 }
+
+
+const container = {
+  display: "flex"
+}
+
+const bodyStyle = {
+  width: "33%",
+}
+
 
 export default App;
