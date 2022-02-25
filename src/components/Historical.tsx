@@ -37,7 +37,6 @@ const Historical = ({ symbols }: { symbols: SymbolsList }) => {
     if (cache[date]) {
       return cache[date];
     }
-    console.log("api call" + date);
     const apiResponse = await fetchRates();
     const ratesResponse = apiResponse.rates;
     cache[date] = ratesResponse;
