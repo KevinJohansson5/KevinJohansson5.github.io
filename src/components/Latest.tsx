@@ -41,7 +41,8 @@ const Latest = ({ symbols }: { symbols: SymbolsList }) => {
   const fetchRates = async () => {
     const API_KEY = process.env.REACT_APP_API_KEY;
     const url =
-      "http://api.exchangeratesapi.io/v1/latest?access_key=" + API_KEY;
+      "https://cors-anywhere.herokuapp.com/http://api.exchangeratesapi.io/v1/latest?access_key=" +
+      API_KEY;
     const response = await fetch(url);
     return response.json();
   };
