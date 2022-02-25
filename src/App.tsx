@@ -15,7 +15,6 @@ function App() {
   };
 
   const fetchSymbols = async () => {
-    console.log(process.env.REACT_APP_API_KEY)
     const API_KEY = process.env.REACT_APP_API_KEY;
     const url =
       "https://cors-anywhere.herokuapp.com/http://api.exchangeratesapi.io/v1/symbols?access_key=" +
