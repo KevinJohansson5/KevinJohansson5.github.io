@@ -21,7 +21,14 @@ const Historical = ({ symbols }: { symbols: SymbolsList }) => {
 
   const updateHistorical = async () => {
     if (dateValid()) {
-      getHistorical();
+      const rates: RatesList = await getHistorical();
+      if (selectedSymbols.length > 0) {
+        const output: RatesList = {};
+        selectedSymbols.map((symbol) => (output[symbol] = rates[symbol]));
+        setHistorical(output);
+      } else {
+        setHistorical(rates);
+      }
       clearSelected();
     }
   };
@@ -30,20 +37,17 @@ const Historical = ({ symbols }: { symbols: SymbolsList }) => {
     if (cache[date]) {
       return cache[date];
     }
+    console.log("api call" + date);
     const apiResponse = await fetchRates();
     const ratesResponse = apiResponse.rates;
-    setHistorical(ratesResponse);
     cache[date] = ratesResponse;
     return ratesResponse;
   };
 
   const fetchRates = async () => {
     const API_KEY = process.env.REACT_APP_API_KEY;
-    const baseUrl =
+    const url =
       "http://api.exchangeratesapi.io/v1/" + date + "?access_key=" + API_KEY;
-    let url = baseUrl;
-    selectedSymbols.length > 0 &&
-      (url = url.concat("&symbols=", selectedSymbols.join()));
     const response = await fetch(url);
     const rates = await response.json();
     return rates;
