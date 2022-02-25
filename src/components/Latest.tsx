@@ -6,6 +6,7 @@ import SymbolsInput from "./SymbolsInput";
 const Latest = ({ symbols }: { symbols: SymbolsList }) => {
   const [selectedSymbols, setSelected] = useState<string[]>([]);
   const [latestVal, setLatest] = useState<RatesList>({});
+  const [cache, setCache] = useState<RatesList>({});
 
   const addSymbol = (selected: string) => {
     !selectedSymbols.includes(selected) &&
@@ -14,19 +15,31 @@ const Latest = ({ symbols }: { symbols: SymbolsList }) => {
   };
 
   const updateLatest = async () => {
+    const rates: RatesList = await getLatest();
+    if (selectedSymbols.length > 0) {
+      const output: RatesList = {};
+      selectedSymbols.map((symbol) => (output[symbol] = rates[symbol]));
+      setLatest(output);
+    } else {
+      setLatest(rates);
+    }
+    clearSelected();
+  };
+
+  const getLatest = async () => {
+    if (Object.keys(cache).length != 0) {
+      return cache;
+    }
     const apiResponse = await fetchRates();
     const ratesResponse = apiResponse.rates;
-    setLatest(ratesResponse);
-    clearSelected();
+    setCache(ratesResponse);
+    return ratesResponse;
   };
 
   const fetchRates = async () => {
     const API_KEY = process.env.REACT_APP_API_KEY;
-    const baseUrl =
+    const url =
       "http://api.exchangeratesapi.io/v1/latest?access_key=" + API_KEY;
-    let url = baseUrl;
-    selectedSymbols.length > 0 &&
-      (url = url.concat("&symbols=", selectedSymbols.join()));
     const response = await fetch(url);
     const data = await response.json();
     return data;
