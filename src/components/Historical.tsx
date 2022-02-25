@@ -53,7 +53,7 @@ const Historical = ({ symbols }: { symbols: SymbolsList }) => {
   };
 
   const dateValid = () => {
-    if (date == "") return false;
+    if (date === "") return false;
     const selectedDate = new Date(date);
     if (selectedDate < minDate || selectedDate > today) return false;
     return true;

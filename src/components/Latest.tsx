@@ -27,7 +27,7 @@ const Latest = ({ symbols }: { symbols: SymbolsList }) => {
   };
 
   const getLatest = async () => {
-    if (Object.keys(cache).length != 0) {
+    if (Object.keys(cache).length !== 0) {
       return cache;
     }
     const apiResponse = await fetchRates();
