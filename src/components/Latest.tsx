@@ -5,7 +5,7 @@ import SymbolsInput from "./SymbolsInput";
 
 const Latest = ({ symbols }: { symbols: SymbolsList }) => {
   const [selectedSymbols, setSelected] = useState<string[]>([]);
-  const [value, setLatest] = useState<RatesList>({});
+  const [latestVal, setLatest] = useState<RatesList>({});
 
   const addSymbol = (selected: string) => {
     !selectedSymbols.includes(selected) &&
@@ -47,10 +47,10 @@ const Latest = ({ symbols }: { symbols: SymbolsList }) => {
       <br></br>
       <button onClick={() => updateLatest()}>Get Latest Rates</button>
       <ul>
-        {Object.keys(value).map((symbol) => (
+        {Object.keys(latestVal).map((symbol) => (
           <li key={symbol}>
             {" "}
-            {symbol} : {value[symbol]}{" "}
+            {symbol} : {latestVal[symbol]}{" "}
           </li>
         ))}
       </ul>
