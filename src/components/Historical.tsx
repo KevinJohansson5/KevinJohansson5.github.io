@@ -3,12 +3,15 @@ import { RatesList } from "./RatesList";
 import { SymbolsList } from "./SymbolsList";
 import SymbolsInput from "./SymbolsInput";
 
+const cache: Cache = {};
+
 const Historical = ({ symbols }: { symbols: SymbolsList }) => {
   const [selectedSymbols, setSelected] = useState<string[]>([]);
   const [historicalVal, setHistorical] = useState<RatesList>({});
   const [date, setDate] = useState<string>("");
 
-  const cache: Cache = {};
+  const minDate = new Date("1999-01-01");
+  const today = new Date();
 
   const addSymbol = (selected: string) => {
     !selectedSymbols.includes(selected) &&
@@ -17,15 +20,21 @@ const Historical = ({ symbols }: { symbols: SymbolsList }) => {
   };
 
   const updateHistorical = async () => {
-    //TODO: check for blank date or date out of range
+    if (dateValid()) {
+      getHistorical();
+      clearSelected();
+    }
+  };
+
+  const getHistorical = async () => {
     if (cache[date]) {
-      setHistorical(cache[date]);
-      return;
+      return cache[date];
     }
     const apiResponse = await fetchRates();
     const ratesResponse = apiResponse.rates;
     setHistorical(ratesResponse);
-    clearSelected();
+    cache[date] = ratesResponse;
+    return ratesResponse;
   };
 
   const fetchRates = async () => {
@@ -36,8 +45,15 @@ const Historical = ({ symbols }: { symbols: SymbolsList }) => {
     selectedSymbols.length > 0 &&
       (url = url.concat("&symbols=", selectedSymbols.join()));
     const response = await fetch(url);
-    const data = await response.json();
-    return data;
+    const rates = await response.json();
+    return rates;
+  };
+
+  const dateValid = () => {
+    if (date == "") return false;
+    const selectedDate = new Date(date);
+    if (selectedDate < minDate || selectedDate > today) return false;
+    return true;
   };
 
   const clearSelected = () => {
@@ -54,7 +70,12 @@ const Historical = ({ symbols }: { symbols: SymbolsList }) => {
       <p>
         <label>Enter Date</label>
         <br></br>
-        <input type="Date" onChange={(e) => selectDate(e.target.value)}></input>
+        <input
+          type="Date"
+          min={minDate.toISOString().slice(0, 10)}
+          max={today.toISOString().slice(0, 10)}
+          onChange={(e) => selectDate(e.target.value)}
+        ></input>
       </p>
       <SymbolsInput
         symbols={symbols}
