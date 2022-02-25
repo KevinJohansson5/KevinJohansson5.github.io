@@ -2,6 +2,8 @@ import { useState } from "react";
 import { RatesList } from "./RatesList";
 import { SymbolsList } from "./SymbolsList";
 import SymbolsInput from "./SymbolsInput";
+import RatesOutput from "./RatesOutput";
+import Button from "./Button";
 
 const Latest = ({ symbols }: { symbols: SymbolsList }) => {
   const [selectedSymbols, setSelected] = useState<string[]>([]);
@@ -57,15 +59,8 @@ const Latest = ({ symbols }: { symbols: SymbolsList }) => {
         addSymbol={addSymbol}
       />
       <br></br>
-      <button onClick={() => updateLatest()}>Get Latest Rates</button>
-      <ul>
-        {Object.keys(latestVal).map((symbol) => (
-          <li key={symbol}>
-            {" "}
-            {symbol} : {latestVal[symbol]}{" "}
-          </li>
-        ))}
-      </ul>
+      <Button text="Get Rates" func={updateLatest}></Button>
+      <RatesOutput list={latestVal}></RatesOutput>
     </div>
   );
 };

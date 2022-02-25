@@ -2,6 +2,8 @@ import { useState } from "react";
 import { RatesList } from "./RatesList";
 import { SymbolsList } from "./SymbolsList";
 import SymbolsInput from "./SymbolsInput";
+import Button from "./Button";
+import RatesOutput from "./RatesOutput";
 
 const cache: Cache = {};
 
@@ -74,6 +76,7 @@ const Historical = ({ symbols }: { symbols: SymbolsList }) => {
         <br></br>
         <input
           type="Date"
+          data-testid="date"
           min={minDate.toISOString().slice(0, 10)}
           max={today.toISOString().slice(0, 10)}
           onChange={(e) => selectDate(e.target.value)}
@@ -85,15 +88,8 @@ const Historical = ({ symbols }: { symbols: SymbolsList }) => {
         addSymbol={addSymbol}
       />
       <br></br>
-      <button onClick={() => updateHistorical()}>Get Rates</button>
-      <ul>
-        {Object.keys(historicalVal).map((symbol) => (
-          <li key={symbol}>
-            {" "}
-            {symbol} : {historicalVal[symbol]}{" "}
-          </li>
-        ))}
-      </ul>
+      <Button text="Get Rates" func={updateHistorical}></Button>
+      <RatesOutput list={historicalVal}></RatesOutput>
     </div>
   );
 };
