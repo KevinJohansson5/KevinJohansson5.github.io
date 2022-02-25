@@ -5,8 +5,10 @@ import SymbolsInput from "./SymbolsInput";
 
 const Historical = ({ symbols }: { symbols: SymbolsList }) => {
   const [selectedSymbols, setSelected] = useState<string[]>([]);
-  const [value, setHistorical] = useState<RatesList>({});
+  const [historicalVal, setHistorical] = useState<RatesList>({});
   const [date, setDate] = useState<string>("");
+
+  const cache: Cache = {};
 
   const addSymbol = (selected: string) => {
     !selectedSymbols.includes(selected) &&
@@ -16,6 +18,10 @@ const Historical = ({ symbols }: { symbols: SymbolsList }) => {
 
   const updateHistorical = async () => {
     //TODO: check for blank date or date out of range
+    if (cache[date]) {
+      setHistorical(cache[date]);
+      return;
+    }
     const apiResponse = await fetchRates();
     const ratesResponse = apiResponse.rates;
     setHistorical(ratesResponse);
@@ -58,10 +64,10 @@ const Historical = ({ symbols }: { symbols: SymbolsList }) => {
       <br></br>
       <button onClick={() => updateHistorical()}>Get Rates</button>
       <ul>
-        {Object.keys(value).map((symbol) => (
+        {Object.keys(historicalVal).map((symbol) => (
           <li key={symbol}>
             {" "}
-            {symbol} : {value[symbol]}{" "}
+            {symbol} : {historicalVal[symbol]}{" "}
           </li>
         ))}
       </ul>
@@ -70,3 +76,7 @@ const Historical = ({ symbols }: { symbols: SymbolsList }) => {
 };
 
 export default Historical;
+
+interface Cache {
+  [key: string]: RatesList;
+}
