@@ -41,7 +41,7 @@ const Latest = ({ symbols }: { symbols: SymbolsList }) => {
     const url =
       "http://api.exchangeratesapi.io/v1/latest?access_key=" + API_KEY;
     const response = await fetch(url);
-    return await response.json();
+    return response.json();
   };
 
   const clearSelected = () => {

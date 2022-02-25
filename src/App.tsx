@@ -19,7 +19,7 @@ function App() {
     const url =
       "http://api.exchangeratesapi.io/v1/symbols?access_key=" + API_KEY;
     const response = await fetch(url);
-    return await response.json();
+    return response.json();
   };
 
   return (
